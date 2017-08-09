@@ -81,12 +81,14 @@ class mainPage {
             this.loadhistoryMessage();
           }
         })
+
         .then(() => this.loadUsers())
         .then(() => this.channelList())
         .then(() => this.wsMsg())
         .then(() => this.exit())
         .then(() => this.HandlerMenuChatBtn())
         .then(() => this.GetYandexMap());
+
     } else {
       let code = location.href;
       code = code.split("?");
@@ -113,6 +115,7 @@ class mainPage {
             .then(this.exit())
             .then(this.HandlerMenuChatBtn())
             .then(this.GetYandexMap());
+
         });
     }
   }
@@ -222,10 +225,10 @@ class mainPage {
       coords = `<map> ${coords}`;
       fetch(
         `https://slack.com/api/chat.postMessage?token=${token}&channel=${channel}&text=${coords}&as_user=${user}&username=${user}&pretty=1`
+
       ).then((document.querySelector(".sendMessage").value = ""));
     }
   }
-
   userInfo() {
     let user = localStorage.getItem("user");
     let token = localStorage.getItem("token");
@@ -255,6 +258,7 @@ class mainPage {
           .then(response => response.json())
           .then(userInfo => {
             let leng = data.messages.length - 1;
+
             fialdMessage.innerHTML = "";
             if (leng != -1) {
               do {
@@ -263,6 +267,7 @@ class mainPage {
                   /<(http.+?)>/g,
                   '<a href="$1" target="_blank">$1</a>'
                 );
+
 
                 if (txt.indexOf("&lt;map&gt;") == 0) {
                   txt = txt.split("&lt;map&gt;");
@@ -294,6 +299,7 @@ class mainPage {
                     }
                     fialdMessage.innerHTML += `<div class="opponentMsg"><span class="name">${name}</span> <br> <img class = "myImgCss opponentMsgImg" src="${img}" width="40" height="40"  > <div class="msg">${txt}</div></div>`;
                   }
+  fialdMessage.innerHTML += `<div class="opponentMsg"><span class="name">${name}</span> <br> <img class = "myImgCss opponentMsgImg" src="${img}" width="40" height="40"  > <div class="msg">${txt}</div></div>`;
                 }
                 leng = leng - 1;
               } while (leng >= 0);
@@ -373,7 +379,9 @@ class mainPage {
         let message;
         let ws = new WebSocket(`${ur}`);
         let name;
+
         let globalThis = this;
+
         ws.onopen = function() {};
         ws.onmessage = function(event) {
           let TypeMessage = JSON.parse(event.data);
@@ -386,6 +394,7 @@ class mainPage {
             let channelName = TypeMessage.channel.name;
             let divChannels = document.querySelector(".channels");
             divChannels.innerHTML += `<span class="mdl-chip mdl-chip--contact mdl-chip--deletable channel_${channelId} channelName_${channelName}">
+
           <img class="mdl-chip__contact channel_${channelId} channelName_${channelName}" src="./img/group.png">
           <span class="mdl-chip__text channel_${channelId} channelName_${channelName}">${channelName}</span>
            <button type="button" class="mdl-chip__action"><i class="material-icons myCross channel_${channelId}" id="removeChannel">cancel</i></button>
@@ -414,6 +423,7 @@ class mainPage {
                   /<(http.+?)>/g,
                   '<a href="$1" target="_blank">$1</a>'
                 );
+
                 if (txt.indexOf("&lt;map&gt;") == 0) {
                   txt = txt.split("&lt;map&gt;");
                   txt = txt.splice(1, 11).join(",");
@@ -431,6 +441,7 @@ class mainPage {
                     }
                     fialdMessage.scrollTop = fialdMessage.scrollHeight;
                   }
+
                 }
               });
           }
@@ -569,6 +580,7 @@ class mainPage {
       }
     });
   }
+
 
   addNewChannel() {
     let dialog = document.querySelector("#dialogForNewChannel");
@@ -724,6 +736,7 @@ class mainPage {
 
       myMap.geoObjects.add(myPlacemark);
     }
+
   }
 }
 
